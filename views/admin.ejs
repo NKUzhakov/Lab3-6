@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Адмін-панель | Потяги</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Адмін-панель</h1>
+
+        <nav class="navbar">
+            <a href="/">Головна</a>
+            <a href="/trains/search">Пошук</a>
+            <a href="/admin">Адмін-панель</a>
+        </nav>
+
+
+        <form action="/admin/add" method="POST" class="form-group">
+            <h2>➕ Додати потяг</h2>
+            <input type="text" name="name" placeholder="Назва потяга" required>
+            <input type="text" name="from" placeholder="Звідки" required>
+            <input type="text" name="to" placeholder="Куди" required>
+            <input type="time" name="time" required>
+            <button type="submit" onclick="window.location.reload()">Додати</button>
+        </form>
+
+
+        <h2>📋 Список потягів</h2>
+        <ul class="train-list">
+            <% trains.forEach(train => { %>
+                <li>
+                    <strong><%= train.name %></strong> | 
+                    З: <%= train.from %> → До: <%= train.to %> |
+                    Час: <%= train.departure %>
+                    
+
+                    <form action="/admin/delete/" method="POST" class="delete-form">
+                        <input type="hidden" name="id" value="<%= train.id %>">
+                        <button type="submit" class="delete-btn">🗑 Видалити</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+</body>
+</html>
