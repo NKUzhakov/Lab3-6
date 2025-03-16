@@ -1,7 +1,5 @@
-/* 🎨 Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-/* 🔥 Загальні стилі */
 * {
     margin: 0;
     padding: 0;
@@ -32,9 +30,9 @@ body {
     animation: fadeIn 1s ease-in-out;
 }
 
-.container:hover {
+/* .container:hover {
     transform: scale(1.02);
-}
+} */
 
 .navbar {
     background: rgba(0, 0, 0, 0.7);
@@ -56,7 +54,7 @@ body {
 
 .navbar a:hover {
     background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
 }
 
 .admin-panel {
@@ -99,7 +97,6 @@ body {
     box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
 }
 
-/* 🎭 Кнопки */
 button {
     background: linear-gradient(135deg, #ff416c, #ff4b2b);
     color: white;
@@ -116,7 +113,7 @@ button {
 
 button:hover {
     background: linear-gradient(135deg, #ff4b2b, #ff416c);
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
 }
 
@@ -139,7 +136,7 @@ button:hover {
 
 .train-list li:hover {
     background: rgba(233, 236, 239, 0.5);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -172,8 +169,7 @@ button:hover {
     font-size: 16px;
 }
 
-/* 📌 Анімація */
-@keyframes fadeIn {
+/* @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(-20px);
@@ -182,4 +178,4 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
-}
+} */

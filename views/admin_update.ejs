@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Адмін-панель | Потяги</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Адмін-панель</h1>
+
+        <nav class="navbar">
+            <a href="/">Головна</a>
+            <a href="/trains/search">Пошук</a>
+            <a href="/admin">Адмін-панель</a>
+        </nav>
+
+
+        <form action="/admin/update/" method="POST" class="form-group">
+            <h2>Редагувати потяг</h2>
+            <input type="hidden" name="id" value="<%= train.id %>">
+            <input type="text" name="name" value="<%= train.name %>" required>
+            <input type="text" name="from" value="<%= train.from %>" required>
+            <input type="text" name="to" value="<%= train.to %>" required>
+            <input type="time" name="time" value="<%= train.departure %>" required>
+            <button type="submit" class="update-btn">🗑 Оновити</button>
+        </form>
+
+    </div>
+</body>
+</html>

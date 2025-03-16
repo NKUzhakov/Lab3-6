@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Train = require('../models/Train');  // ✅ Додаємо підключення моделі Train.js
+const Train = require('../models/Train'); 
 
-// ✅ Відображення адмін-панелі
 router.get('/', (req, res) => {
     const trains = Train.getAll(data=>{
         res.render('admin', { trains: data });
@@ -10,14 +9,11 @@ router.get('/', (req, res) => {
     
 });
 
-// ✅ Додавання потяга
 router.post('/add', (req, res) => {
-    console.log("📥 Отримано POST-запит на /admin/add");
-    console.log("📌 Дані з форми:", req.body);
 
     const { name, from, to, time } = req.body;
     if (!name || !from || !to || !time) {
-        console.error("❌ ПОМИЛКА: Усі поля повинні бути заповнені!");
+        console.error("ПОМИЛКА: Усі поля повинні бути заповнені!");
         return res.status(400).send("Усі поля повинні бути заповнені!");
     }
 
@@ -26,7 +22,7 @@ router.post('/add', (req, res) => {
     res.redirect('/admin');
 });
 
-// ✅ Видалення потяга
+
 router.post('/delete/', (req, res) => {
     console.log("🗑 Отримано запит на видалення потяга, ID:", req.body.id);
 
@@ -44,4 +40,22 @@ router.post('/delete/', (req, res) => {
     console.log("✅ Потяг успішно видалено!");
     res.redirect('/admin');  // 🔥 ПРАВИЛЬНЕ ПЕРЕНАПРАВЛЕННЯ
 });
+router.post('/updateform',(req, res) => {
+    Train.getById(req.body.id, train=>{
+        res.render('admin_update', { train });
+    })
+});
+router.post('/update/',(req, res) => {
+    const train = req.body;
+    const {id, name, from, to, time } = train
+    if (!name || !from || !to || !time) {
+        console.error("ПОМИЛКА: Усі поля повинні бути заповнені!");
+        return res.status(400).send("Усі поля повинні бути заповнені!");
+    }
+    
+    
+    Train.updateTrain(id, { name, from, to, time });
+    res.redirect('/admin');
+
+}) 
 module.exports = router;

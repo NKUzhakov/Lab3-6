@@ -17,12 +17,12 @@
 
 
         <form action="/admin/add" method="POST" class="form-group">
-            <h2>➕ Додати потяг</h2>
+            <h2>Додати потяг</h2>
             <input type="text" name="name" placeholder="Назва потяга" required>
             <input type="text" name="from" placeholder="Звідки" required>
             <input type="text" name="to" placeholder="Куди" required>
             <input type="time" name="time" required>
-            <button type="submit" onclick="window.location.reload()">Додати</button>
+            <button type="submit" >Додати</button>
         </form>
 
 
@@ -35,9 +35,10 @@
                     Час: <%= train.departure %>
                     
 
-                    <form action="/admin/delete/" method="POST" class="delete-form">
+                    <form  method="POST" class="delete-form">
                         <input type="hidden" name="id" value="<%= train.id %>">
-                        <button type="submit" class="delete-btn">🗑 Видалити</button>
+                        <button type="submit" formaction="/admin/delete/" class="delete-btn">🗑 Видалити</button>
+                        <button type="submit" formaction="/admin/updateform" class="update-btn">🗑 Оновити</button>
                     </form>
                 </li>
             <% }) %>
