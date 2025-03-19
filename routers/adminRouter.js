@@ -4,22 +4,22 @@ const Train = require('../models/Train');
 
 router.get('/', (req, res) => {
     const trains = Train.getAll(data=>{
-        res.render('admin', { trains: data });
+        res.render('admin', { trains: data});
     });
     
 });
 
 router.post('/add', (req, res) => {
-
     const { name, from, to, time } = req.body;
     if (!name || !from || !to || !time) {
         console.error("ПОМИЛКА: Усі поля повинні бути заповнені!");
         return res.status(400).send("Усі поля повинні бути заповнені!");
     }
-
-    Train.addTrain({ name, from, to, time });
-
-    res.redirect('/admin');
+    Train.addTrain({ name, from, to, time }).then(()=>{res.redirect('/admin');})
+                                            .catch((err)=>{
+                                                return res.status(400).send(err);
+                                            });
+    
 });
 
 
@@ -54,8 +54,10 @@ router.post('/update/',(req, res) => {
     }
     
     
-    Train.updateTrain(id, { name, from, to, time });
-    res.redirect('/admin');
+    Train.updateTrain(id, { name, from, to, time }).then(()=>{res.redirect('/admin');})
+    .catch((err)=>{
+        return res.status(400).send(err);
+    });
 
 }) 
 module.exports = router;

@@ -65,9 +65,11 @@ exports.addTrain = async (train) => {
         await request2.query(`insert into Stations (Name, Status, TrainId) values (@NameFrom, @StatusFrom, @TrainId), (@NameTo, @StatusTo, @TrainId)`);
 
         await transaction.commit();
-    } catch (err) {
-        console.error('Помилка:', err);        
+    } catch (err) {                
         await transaction.rollback();
+        console.error('Помилка:', err);
+        throw "Too long text";
+        // errCallback();
     }
 };
 exports.updateTrain = async (IdOfUpd, updTrain) =>{
@@ -91,9 +93,11 @@ exports.updateTrain = async (IdOfUpd, updTrain) =>{
         await request3.query(`update Stations set Name = @NameTo where TrainId = @TrainId and Status = 'to'`);
 
         await transaction.commit();
-    } catch (err) {
-        console.error('Помилка:', err);        
+    } catch (err) {               
         await transaction.rollback();
+        console.error('Помилка:', err); 
+        throw "Too long text";
+        // errCallback();
     }
 }
 exports.deleteTrain = async (id) => {
