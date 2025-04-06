@@ -23,22 +23,13 @@ router.post('/add', (req, res) => {
 });
 
 
-router.post('/delete/', (req, res) => {
-    console.log("🗑 Отримано запит на видалення потяга, ID:", req.body.id);
-
+router.post('/delete/', (req, res) => {    
     if (!req.body.id) {
-        console.error("❌ ПОМИЛКА: ID не передано!");
-        return res.status(400).send("<h1>❌ ПОМИЛКА: ID потяга не вказано!</h1>");
+        console.error("ПОМИЛКА: ID не передано!");
+        return res.status(400).send("<h1>ПОМИЛКА: ID потяга не вказано!</h1>");
     }
-
-    const success = Train.deleteTrain(req.body.id);
-    if (!success) {
-        console.error("❌ ПОМИЛКА: Потяг з таким ID не знайдено!");
-        return res.status(400).send("<h1>❌ ПОМИЛКА: Потяг не знайдено!</h1>");
-    }
-
-    console.log("✅ Потяг успішно видалено!");
-    res.redirect('/admin');  // 🔥 ПРАВИЛЬНЕ ПЕРЕНАПРАВЛЕННЯ
+    Train.deleteTrain(req.body.id).then(() => res.redirect('/admin'))
+    .catch(() => res.status(400).send("<h1>ПОМИЛКА: Потяг не знайдено!</h1>"));
 });
 router.post('/updateform',(req, res) => {
     Train.getById(req.body.id, train=>{
