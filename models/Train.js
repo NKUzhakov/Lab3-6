@@ -81,14 +81,16 @@ Train.hasMany(Station);
 
 
 // Data operation logic
-exports.getAll = async function(callback){
+exports.getAll = async function(callback, page=1, limit=100){
     try {
         const trainsWithStations = await Train.findAll({include: Station});
-        const res = trainsWithStations.map(({Id:id, Name:name, departureTime:departure, Stations}) => {
+        const fullres = trainsWithStations.map(({Id:id, Name:name, departureTime:departure, Stations}) => {
             const from = Stations.find(st => st.Status === "from").Name;
             const to = Stations.find(st => st.Status === "to").Name;
             return {id, name, departure, from, to}
         });
+
+        const res = fullres.slice((page-1)*limit, page*limit);        
         callback(res);
     } catch (err) {
         console.error("ПОМИЛКА отримання даних:", err);
@@ -110,7 +112,7 @@ exports.getById = async function(Id, callback){
 exports.addTrain = async (train) => {
     const t = await sequelize.transaction();
     try {
-        await Train.create({
+        newTrain = await Train.create({
             Name: train.name,
             departureTime: train.time,
             Stations:[
@@ -129,10 +131,12 @@ exports.addTrain = async (train) => {
             transaction: t
         });
         t.commit();
+        // return (newTrain.Id);
+
     } catch (err) {    
         t.rollback();            
         console.error('Помилка:', err);
-        throw "Too long text";
+        throw Error("Too long text");
     }
 };
 exports.updateTrain = async (IdOfUpd, updTrain) =>{
@@ -170,11 +174,14 @@ exports.updateTrain = async (IdOfUpd, updTrain) =>{
                 transaction: t
             }
         );
-        await t.commit()
+        await t.commit();
+        // return true;
+        // callback(true); //Sucess
     } catch (err) {
         await t.rollback();
+        // callback(false);
         console.error('Помилка:', err); 
-        throw "Too long text";
+        throw Error("Too long text");
     }
 };
 exports.deleteTrain = async (id) => {
@@ -194,13 +201,14 @@ exports.deleteTrain = async (id) => {
             force: true,
             transaction: t,
         });
-        await t.commit()
+        await t.commit();
         // return true;
     } catch (err) {    
-        await t.rollback();    
+        await t.rollback();  
+        // callback(false);
         console.error("ПОМИЛКА видалення потяга:", err);         
         // return false;
-        throw "Неможливо видалити";
+        throw Error("Неможливо видалити");
     }
 };
 exports.search = async (from, to, callback) => {
@@ -303,7 +311,7 @@ exports.search = async (from, to, callback) => {
 //     } catch (err) {                
 //         await transaction.rollback();
 //         console.error('Помилка:', err);
-//         throw "Too long text";
+//         throw Error("Too long text");
 //         // errCallback();
 //     }
 // };
@@ -331,7 +339,7 @@ exports.search = async (from, to, callback) => {
 //     } catch (err) {               
 //         await transaction.rollback();
 //         console.error('Помилка:', err); 
-//         throw "Too long text";
+//         throw Error("Too long text");
 //         // errCallback();
 //     }
 // }
@@ -351,7 +359,7 @@ exports.search = async (from, to, callback) => {
 //     } catch (err) {        
 //         console.error("ПОМИЛКА видалення потяга:", err); 
 //         await transaction.rollback();
-//         throw "Неможливо видалити";
+//         throw Error("Неможливо видалити");
 //         // return false;
 //     }
 // };

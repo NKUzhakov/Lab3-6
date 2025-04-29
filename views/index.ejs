@@ -8,12 +8,13 @@
 
 </head>
 <body>
+
     <h1>Розклад потягів</h1>
     <ul>
         <% trains.forEach(train => { %>
             <li><%= train.name %> з <%= train.from %> до <%= train.to %> о <%= train.departure %></li>
         <% }) %>
     </ul>
-    <a href="/trains/search">Пошук потяга</a>
+    <a href="/admin/">Пошук потяга</a>
 </body>
 </html>

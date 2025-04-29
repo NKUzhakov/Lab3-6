@@ -11,12 +11,12 @@
 
         <nav class="navbar">
             <a href="/">Головна</a>
-            <a href="/trains/search">Пошук</a>
+            <a href="/admin/search">Пошук</a>
             <a href="/admin">Адмін-панель</a>
         </nav>
 
 
-        <form action="/admin/add" method="POST" class="form-group">
+        <form action="/api/trains/add" method="POST" class="form-group">
             <h2>Додати потяг</h2>
             <input type="text" name="name" placeholder="Назва потяга" required>
             <input type="text" name="from" placeholder="Звідки" required>
@@ -32,17 +32,27 @@
                 <li>
                     <strong><%= train.name %></strong> | 
                     З: <%= train.from %> → До: <%= train.to %> |
-                    Час: <%= train.departure %>
-                    
+                    Час: <%= train.departure %>                    
 
                     <form  method="POST" class="delete-form">
                         <input type="hidden" name="id" value="<%= train.id %>">
-                        <button type="submit" formaction="/admin/delete/" class="delete-btn">🗑 Видалити</button>
-                        <button type="submit" formaction="/admin/updateform" class="update-btn">🗑 Оновити</button>
+                        <button type="submit" formaction="/api/trains/delete" class="delete-btn">Видалити</button>
+                        <button type="submit" formaction="/api/trainByid" formmethod="GET" class="update-btn">Оновити</button>
                     </form>
                 </li>
             <% }) %>
         </ul>
+
+        <form  method="GET" class="paginate-form">
+            <input type="hidden" name="page" value="<%= currentPage-1 %>">
+            <input type="hidden" name="limit" value="5">
+            <button type="submit" formaction="/admin" class="next-btn">Назад</button>
+        </form>
+        <form  method="GET" class="paginate-form">
+            <input type="hidden" name="page" value="<%= currentPage+1 %>">
+            <input type="hidden" name="limit" value="5">
+            <button type="submit" formaction="/admin" class="next-btn">Вперeд</button>
+        </form>
     </div>
 </body>
 </html>

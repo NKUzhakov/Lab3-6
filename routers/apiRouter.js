@@ -2,22 +2,22 @@ const express = require('express');
 const router = express.Router();
 const trainController = require('../controllers/trainControllers.js');
 
+// GET filtered trains
+router.get('/trains/filter', trainController.filterTrainsApi);
+
 // GET all trains with pagination
 router.get('/trains', trainController.getAllTrainsApi);
 
 // GET single train by ID
-router.get('/trains/:id', trainController.getTrainByIdApi);
+router.get('/trainByid', trainController.getTrainByIdApi);
 
 // POST create new train
-router.post('/trains', trainController.createTrainApi);
+router.post('/trains/add', trainController.createTrainApi);
 
 // PUT update train
-router.put('/trains/:id', trainController.updateTrainApi);
+router.post('/trains/update', trainController.updateTrainApi);
 
 // DELETE train
-router.delete('/trains/:id', trainController.deleteTrainApi);
-
-// GET filtered trains
-router.get('/trains/filter', trainController.filterTrainsApi);
+router.post('/trains/delete', trainController.deleteTrainApi);
 
 module.exports = router; 

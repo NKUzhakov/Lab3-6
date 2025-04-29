@@ -12,11 +12,11 @@
 
         <nav class="navbar">
             <a href="/">Головна</a>
-            <a href="/trains/search">Пошук</a>
+            <a href="/admin/search">Пошук</a>
             <a href="/admin">Адмін-панель</a>
         </nav>
 
-        <form action="/trains/search" method="GET">
+        <form action="/api/trains/filter" method="GET">
             <div class="mb-3">
                 <label>Звідки:</label>
                 <input type="text" name="from" value="<%= from || '' %>" required>

@@ -1,25 +1,21 @@
 const Train = require('../models/Train.js');
 
-exports.getAdminPanel = (req, res) => {
-     Train.getAll(data=>{
-        res.render('admin', { trains:data });
-    })
-    
+exports.getAdminPanel = (req, res) => {       
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+
+    Train.getAll((trains) => {
+        res.render('admin', {trains, currentPage: page});
+    }, page, limit);       
 };
+exports.getSearchPanel = (req, res) => {
+    const { from, to } = req.query;
 
-exports.addTrain = (req, res) => {
-    const { name, from, to, departure, arrival } = req.body;
-
-    if (!name || !from || !to || !departure || !arrival) {
-        return res.redirect('/admin?error=missing_fields');
+    if (!from || !to) {
+        return res.render('search', { results: [], from, to });
     }
 
-    Train.addTrain({ name, from, to, departure, arrival });
-    res.redirect('/admin'); 
-};
-
-exports.deleteTrain = (req, res) => {
-    const { id } = req.params;
-    Train.deleteTrain(id);
-    res.redirect('/admin');
+    Train.search(from, to, data => {
+        res.render('search', { results: data, from, to }); 
+    });
 };
